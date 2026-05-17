@@ -14,7 +14,7 @@
   let isLoading = false;
   let messageHistory = [];
   
-  const API_BASE_URL = window.PORTFOLIO_AI_API_URL || 'http://localhost:5000';
+  const API_BASE_URL = window.PORTFOLIO_AI_API_URL || 'https://atul-portfolio-ai.onrender.com';
   const API_URL = `${API_BASE_URL}/api/chat`;
 
   /**
