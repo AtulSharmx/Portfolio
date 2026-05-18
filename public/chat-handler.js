@@ -51,7 +51,7 @@
     const loadingEl = document.createElement('article');
     loadingEl.className = 'km-chat-card ai km-chat-loading';
     loadingEl.id = 'km-loading';
-    loadingEl.innerHTML = '<p>Thinking... <span class="dots">●●●</span></p>';
+    loadingEl.innerHTML = '<p>Typing... <span class="dots">●●●</span></p>';
     
     const inputWrap = document.querySelector('.km-chat-input-wrap');
     chatPopup.insertBefore(loadingEl, inputWrap);
