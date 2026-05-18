@@ -1,15 +1,46 @@
 document.body.classList.add("loader-active");
 
 window.addEventListener("load", () => {
-  document.body.classList.remove("loader-active");
-  setTimeout(() => {
-    const loader = document.getElementById("loader");
-    if (loader) loader.classList.add("hidden");
+  const loader = document.getElementById("loader");
+  let settled = false;
 
+  const revealHero = () => {
     document.querySelectorAll("#hero .reveal-up").forEach((el, idx) => {
       setTimeout(() => el.classList.add("visible"), 130 * idx);
     });
-  }, 1800);
+  };
+
+  const finishLoading = () => {
+    if (settled) return;
+    settled = true;
+    document.body.classList.remove("loader-active");
+    revealHero();
+  };
+
+  if (!loader) {
+    finishLoading();
+    return;
+  }
+
+  const transitionDone = (event) => {
+    if (event.target !== loader || event.propertyName !== "opacity") return;
+    loader.removeEventListener("transitionend", transitionDone);
+    loader.style.display = "none";
+    finishLoading();
+  };
+
+  loader.addEventListener("transitionend", transitionDone);
+
+  requestAnimationFrame(() => {
+    loader.classList.add("hidden");
+  });
+
+  setTimeout(() => {
+    if (!settled) {
+      loader.style.display = "none";
+      finishLoading();
+    }
+  }, 900);
 });
 
 const cursor = document.getElementById("cursor");

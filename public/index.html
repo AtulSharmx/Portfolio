@@ -24,22 +24,11 @@
 <body>
 
   <!-- PAGE LOADER -->
-  <div id="loader" class="modern-loader">
-    <div class="loader-container">
-      <svg class="loader-spinner" height="48" width="48" stroke-linejoin="round" viewBox="0 0 16 16" fill="none">
-        <g>
-          <path d="M8 0V4" stroke="currentColor" stroke-width="1.5"/>
-          <path opacity="0.5" d="M8 16V12" stroke="currentColor" stroke-width="1.5"/>
-          <path opacity="0.9" d="M3.29773 1.52783L5.64887 4.7639" stroke="currentColor" stroke-width="1.5"/>
-          <path opacity="0.1" d="M12.7023 1.52783L10.3511 4.7639" stroke="currentColor" stroke-width="1.5"/>
-          <path opacity="0.4" d="M12.7023 14.472L10.3511 11.236" stroke="currentColor" stroke-width="1.5"/>
-          <path opacity="0.6" d="M3.29773 14.472L5.64887 11.236" stroke="currentColor" stroke-width="1.5"/>
-          <path opacity="0.2" d="M15.6085 5.52783L11.8043 6.7639" stroke="currentColor" stroke-width="1.5"/>
-          <path opacity="0.7" d="M0.391602 10.472L4.19583 9.23598" stroke="currentColor" stroke-width="1.5"/>
-          <path opacity="0.3" d="M15.6085 10.4722L11.8043 9.2361" stroke="currentColor" stroke-width="1.5"/>
-          <path opacity="0.8" d="M0.391602 5.52783L4.19583 6.7639" stroke="currentColor" stroke-width="1.5"/>
-        </g>
-      </svg>
+  <div id="loader" class="modern-loader" role="status" aria-label="Loading website" aria-live="polite">
+    <div class="orbital-loader" aria-hidden="true">
+      <div class="orbital-ring orbital-ring--outer"></div>
+      <div class="orbital-ring orbital-ring--mid"></div>
+      <div class="orbital-ring orbital-ring--inner"></div>
     </div>
   </div>
 
@@ -136,7 +125,7 @@
  to intern & collab</span></div>
           </div>
           <div class="learning-box reveal-up delay-3">
-            <p class="lb-label">currently figuring out 🔍</p>
+            <p class="lb-label">Things I Enjoy</p>
             <div class="lb-items">
               <span>🎨 Graphic Design</span>
               <span>⚙  Git & GitHub</span>
@@ -296,10 +285,9 @@
   <section class="panel panel-hype" id="coming-soon">
     <div class="hype-inner">
       <div class="hype-eyebrow reveal-up">something big is coming 👀</div>
-      <h2 class="hype-title reveal-up delay-1">🇮🇳</h2>
       <p class="hype-line reveal-up delay-2">AI that helps you survive emergencies —</p>
-      <p class="hype-line reveal-up delay-3">in <strong>Hindi</strong> & <strong>English.</strong></p>
-      <div class="hype-badge reveal-up delay-4">Coming Soon</div>
+      <p class="hype-line reveal-up delay-3">in <strong>Hinglish</strong></p>
+      <div class="hype-badge reveal-up delay-4">Launching Soon</div>
     </div>
     <!-- Sketch guy pointing up excitedly -->
     <div class="hype-sketch reveal-up delay-2">
@@ -490,4 +478,3 @@
   <script src="chat-handler.js" defer></script>
 </body>
 </html>
-
