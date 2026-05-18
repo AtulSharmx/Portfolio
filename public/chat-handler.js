@@ -1,190 +1,148 @@
 /**
- * Chat Handler for Atul AI
- * Connects the "Know Me More" popup with the backend Gemini API
+ * Chat Handler — Atul AI
+ * Connects the chat popup with the Gemini backend
  */
 
 (function initializeChat() {
-  const chatPopup = document.getElementById('kmChatPopup');
-  const chatInput = document.getElementById('kmChatInput');
+  const chatPopup   = document.getElementById('kmChatPopup');
+  const chatInput   = document.getElementById('kmChatInput');
   const chatSendBtn = document.querySelector('.km-chat-send-btn');
-  const quickBtns = document.querySelectorAll('.km-chat-quick-btn');
+  const quickBtns   = document.querySelectorAll('.km-chat-quick-btn');
   const chatOverlay = document.getElementById('kmChatOverlay');
-  
-  // Chat state
-  let isLoading = false;
-  let messageHistory = [];
-  
-  const API_BASE_URL = window.PORTFOLIO_AI_API_URL || 'https://atul-portfolio-ai.onrender.com';
-  const API_URL = `${API_BASE_URL}/api/chat`;
 
-  /**
-   * Add message to chat
-   */
-  function addMessage(text, isUser = true) {
-    const messageEl = document.createElement('article');
-    messageEl.className = `km-chat-card ${isUser ? 'user' : 'ai'}`;
-    
-    if (isUser) {
-      messageEl.innerHTML = `<p>${escapeHtml(text)}</p>`;
-      messageEl.style.marginLeft = 'auto';
-      messageEl.style.backgroundColor = '#e8ff47';
-      messageEl.style.color = '#1a1a1a';
-      messageEl.style.maxWidth = '80%';
-    } else {
-      messageEl.innerHTML = `<p>${escapeHtml(text)}</p>`;
-    }
-    
-    // Find chat messages container (before input wrap)
-    const inputWrap = document.querySelector('.km-chat-input-wrap');
-    chatPopup.insertBefore(messageEl, inputWrap);
-    
-    // Auto scroll to bottom
-    setTimeout(() => {
-      chatPopup.scrollTop = chatPopup.scrollHeight;
-    }, 50);
+  if (!chatPopup || !chatInput || !chatSendBtn) return;
+
+  const API_BASE = window.PORTFOLIO_AI_API_URL || 'https://atul-portfolio-ai.onrender.com';
+  const API_URL  = `${API_BASE}/api/chat`;
+
+  let isLoading = false;
+  const MAX_HISTORY = 20; // cap memory usage
+  const messageHistory = [];
+
+  // ── Helpers ──────────────────────────────────────────────
+
+  function escapeHtml(text) {
+    return text.replace(/[&<>"']/g, (m) =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m])
+    );
   }
 
-  /**
-   * Show loading indicator
-   */
+  function addMessage(text, isUser = true) {
+    const el = document.createElement('article');
+    el.className = `km-chat-card ${isUser ? 'user' : 'ai'}`;
+    el.innerHTML = `<p>${escapeHtml(text)}</p>`;
+
+    if (isUser) {
+      el.style.cssText = 'margin-left:auto;background:#e8ff47;color:#1a1a1a;max-width:80%';
+    }
+
+    const inputWrap = chatPopup.querySelector('.km-chat-input-wrap');
+    chatPopup.insertBefore(el, inputWrap);
+    setTimeout(() => { chatPopup.scrollTop = chatPopup.scrollHeight; }, 50);
+  }
+
   function showLoading() {
-    const loadingEl = document.createElement('article');
-    loadingEl.className = 'km-chat-card ai km-chat-loading';
-    loadingEl.id = 'km-loading';
-    loadingEl.innerHTML = '<p>Typing... <span class="dots">●●●</span></p>';
-    
-    const inputWrap = document.querySelector('.km-chat-input-wrap');
-    chatPopup.insertBefore(loadingEl, inputWrap);
-    
-    // Animate dots
+    const el = document.createElement('article');
+    el.className = 'km-chat-card ai km-chat-loading';
+    el.id = 'km-loading';
+    el.innerHTML = '<p>Typing <span class="dots" aria-live="polite">●●●</span></p>';
+
+    const inputWrap = chatPopup.querySelector('.km-chat-input-wrap');
+    chatPopup.insertBefore(el, inputWrap);
+    chatPopup.scrollTop = chatPopup.scrollHeight;
+
     let dotCount = 0;
-    const dotInterval = setInterval(() => {
-      const dots = document.querySelector('.dots');
+    const dotSym = ['○○○', '●○○', '●●○', '●●●'];
+    const interval = setInterval(() => {
+      const dots = document.querySelector('#km-loading .dots');
       if (dots) {
         dotCount = (dotCount + 1) % 4;
-        dots.textContent = '●●●'.substring(0, dotCount + 1).padEnd(3, '○');
+        dots.textContent = dotSym[dotCount];
       } else {
-        clearInterval(dotInterval);
+        clearInterval(interval);
       }
-    }, 500);
-    
-    chatPopup.scrollTop = chatPopup.scrollHeight;
+    }, 400);
+
+    // Store interval on element so removeLoading can clear it safely
+    el._dotInterval = interval;
   }
 
-  /**
-   * Remove loading indicator
-   */
   function removeLoading() {
-    const loadingEl = document.getElementById('km-loading');
-    if (loadingEl) loadingEl.remove();
+    const el = document.getElementById('km-loading');
+    if (!el) return;
+    if (el._dotInterval) clearInterval(el._dotInterval);
+    el.remove();
   }
 
-  /**
-   * Send message to backend
-   */
-  async function sendMessage(userText) {
-    if (!userText.trim() || isLoading) return;
+  // ── Core send logic ───────────────────────────────────────
 
-    // Add user message to chat
-    addMessage(userText, true);
+  async function sendMessage(userText) {
+    const text = userText.trim();
+    if (!text || isLoading) return;
+
+    addMessage(text, true);
     chatInput.value = '';
-    
     isLoading = true;
+    chatSendBtn.disabled = true;
     showLoading();
 
     try {
-      const response = await fetch(API_URL, {
+      const res = await fetch(API_URL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message: userText }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text }),
+        signal: AbortSignal.timeout(20000), // 20 s timeout
       });
 
       removeLoading();
 
-      if (!response.ok) {
-        const rawBody = await response.text();
-        let errorData = {};
+      if (!res.ok) {
+        let errMsg = `Error ${res.status}`;
         try {
-          errorData = rawBody ? JSON.parse(rawBody) : {};
-        } catch (_err) {
-          errorData = { message: rawBody };
-        }
-
-        const serverMsg = errorData.details || errorData.message || errorData.error || 'Unknown server error';
-        throw new Error(`HTTP ${response.status}: ${serverMsg}`);
+          const data = await res.json();
+          errMsg = data.message || data.error || errMsg;
+        } catch (_) { /* ignore parse errors */ }
+        throw new Error(errMsg);
       }
 
-      const data = await response.json();
-      
+      const data = await res.json();
+
       if (data.success && data.message) {
         addMessage(data.message, false);
-        messageHistory.push({ user: userText, ai: data.message });
+        messageHistory.push({ user: text, ai: data.message });
+        // Prevent unbounded memory growth
+        if (messageHistory.length > MAX_HISTORY) messageHistory.shift();
       } else {
-        addMessage('Sorry, I could not generate a response. Please try again.', false);
+        addMessage("Sorry, I couldn't generate a response. Try again?", false);
       }
-    } catch (error) {
+    } catch (err) {
       removeLoading();
-      console.error('Chat error:', error);
 
-      let errorMessage = 'Chat error: ';
-      if (error.message.includes('Failed to fetch')) {
-        errorMessage += 'Cannot connect to backend at http://localhost:5000.';
-      } else {
-        errorMessage += error.message;
-      }
+      let msg = 'Something went wrong. Please try again.';
+      if (err.name === 'TimeoutError') msg = 'Response timed out. Please try again.';
+      else if (err.message.includes('Failed to fetch')) msg = 'Cannot reach the server. Check your connection.';
+      else if (err.message) msg = err.message;
 
-      addMessage(errorMessage, false);
+      addMessage(msg, false);
     } finally {
       isLoading = false;
+      chatSendBtn.disabled = false;
       chatInput.focus();
     }
   }
 
-  /**
-   * Handle send button click
-   */
-  chatSendBtn?.addEventListener('click', () => {
-    const message = chatInput.value.trim();
-    if (message) sendMessage(message);
-  });
+  // ── Event listeners ───────────────────────────────────────
 
-  /**
-   * Handle Enter key in input
-   */
-  chatInput?.addEventListener('keypress', (e) => {
+  chatSendBtn.addEventListener('click', () => sendMessage(chatInput.value));
+
+  chatInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      const message = chatInput.value.trim();
-      if (message) sendMessage(message);
+      sendMessage(chatInput.value);
     }
   });
 
-  /**
-   * Handle quick question buttons
-   */
-  quickBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const question = btn.textContent;
-      sendMessage(question);
-    });
+  quickBtns.forEach((btn) => {
+    btn.addEventListener('click', () => sendMessage(btn.textContent.replace(/^[^\w]+/, '').trim()));
   });
-
-  /**
-   * Escape HTML to prevent XSS
-   */
-  function escapeHtml(text) {
-    const map = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#039;'
-    };
-    return text.replace(/[&<>"']/g, m => map[m]);
-  }
-
-  // Log chat ready
-  console.log('✅ Atul AI Chat initialized:', API_URL);
 })();

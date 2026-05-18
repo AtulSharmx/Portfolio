@@ -31,7 +31,7 @@ Financial freedom — I never want to ask anyone for money. And one big dream �
 ## MY SKILLS
 Languages: Python (basics), HTML, CSS
 Tools: VS Code (hands-on daily), Git & GitHub (learning)
-AI & Vibe Coding Tools: Cursor, Lovable, Claude, ChatGPT (daily use)
+AI & Vibe Coding Tools: Claude, ChatGPT, Antigravity (daily use)
 Currently Figuring Out: Graphic Design, Git & GitHub properly, 3D Designing
 Languages I speak: Hindi, English
 
@@ -62,8 +62,8 @@ GitHub: https://github.com/AtulSharmx/Pomodoro-Timer
 ### 5. This Portfolio Website
 You're literally on it right now 😁. Built from scratch with HTML, CSS, JS — no templates, no shortcuts.
 Tech: HTML, CSS, JavaScript + Node.js backend for AI chat
-Live: https://atulsharmx.netlify.app/
-GitHub: https://github.com/AtulSharmx/atulsharma
+Live: https://atulsharma.com/
+GitHub: https://github.com/AtulSharmx/portfolio-ai
 
 ## COMING SOON PROJECTS
 
@@ -94,7 +94,7 @@ A society management app with AI. Residents can submit complaints by just talkin
    Showed up to the inter-college science & tech fest. Explored, connected, and soaked it all in. · SGT University · 2025
 
 ## MY CONTACT
-Email: atulsharm0744@gmail.com
+Email: [EMAIL_ADDRESS]
 GitHub: https://github.com/AtulSharmx
 LinkedIn: https://www.linkedin.com/in/atul-sharma-869715392/
 Instagram: https://www.instagram.com/atul_sharmx_/

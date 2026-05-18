@@ -16,15 +16,21 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 const hasGeminiKey = Boolean(process.env.GEMINI_API_KEY);
 
 // ============ MIDDLEWARE ============
+const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',')
+  : null;
+
 app.use(cors({
-  origin: true,
+  origin: ALLOWED_ORIGINS || true, // restrict via env var in production
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type'],
   credentials: false,
 }));
 app.options('*', cors());
-app.use(express.json({ limit: '10mb' }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json({ limit: '50kb' })); // chat messages are tiny
+app.use(express.static(path.join(__dirname, 'public'), {
+  maxAge: isDevelopment ? 0 : '1d', // cache static assets in production
+}));
 
 // ============ INITIALIZE GEMINI ============
 try {
@@ -72,15 +78,7 @@ app.use((err, req, res, next) => {
 
 // ============ START SERVER ============
 app.listen(PORT, () => {
-  console.log(`
-╔════════════════════════════════════════╗
-║        🤖 Atul AI Backend Running      ║
-╠════════════════════════════════════════╣
-║ 🚀 Server: http://localhost:${PORT}      ║
-║ 📝 Chat:   POST /api/chat              ║
-║ ✅ Health: GET /health                 ║
-╚════════════════════════════════════════╝
-  `);
+  console.log(`[server] Running on port ${PORT} (${isDevelopment ? 'development' : 'production'})`);
 });
 
 // Handle graceful shutdown

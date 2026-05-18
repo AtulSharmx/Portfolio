@@ -1,3 +1,4 @@
+// ============ PAGE LOADER ============
 document.body.classList.add("loader-active");
 
 window.addEventListener("load", () => {
@@ -17,87 +18,74 @@ window.addEventListener("load", () => {
     revealHero();
   };
 
-  if (!loader) {
-    finishLoading();
-    return;
-  }
+  if (!loader) { finishLoading(); return; }
 
-  const transitionDone = (event) => {
-    if (event.target !== loader || event.propertyName !== "opacity") return;
+  const transitionDone = (e) => {
+    if (e.target !== loader || e.propertyName !== "opacity") return;
     loader.removeEventListener("transitionend", transitionDone);
     loader.style.display = "none";
     finishLoading();
   };
 
   loader.addEventListener("transitionend", transitionDone);
+  requestAnimationFrame(() => loader.classList.add("hidden"));
 
-  requestAnimationFrame(() => {
-    loader.classList.add("hidden");
-  });
-
+  // Fallback in case transitionend doesn't fire
   setTimeout(() => {
-    if (!settled) {
-      loader.style.display = "none";
-      finishLoading();
-    }
+    if (!settled) { loader.style.display = "none"; finishLoading(); }
   }, 900);
 });
 
+// ============ CUSTOM CURSOR ============
 const cursor = document.getElementById("cursor");
 const follower = document.getElementById("cursorFollower");
 
 if (cursor && follower) {
-  let mouseX = 0;
-  let mouseY = 0;
-  let followerX = 0;
-  let followerY = 0;
+  let mouseX = 0, mouseY = 0;
+  let followerX = 0, followerY = 0;
   let ticking = false;
   let overInteractive = false;
   const darkSectionsInView = new Set();
 
   const applyCursorPalette = () => {
     const isDark = darkSectionsInView.size > 0;
-
     if (overInteractive) {
       cursor.style.background = "var(--accent)";
       follower.style.borderColor = "var(--accent)";
       return;
     }
-
     cursor.style.background = isDark ? "#fff" : "var(--ink)";
     follower.style.borderColor = isDark ? "#fff" : "var(--ink)";
   };
 
-  const updateCursor = () => {
-    cursor.style.left = `${mouseX}px`;
-    cursor.style.top = `${mouseY}px`;
-  };
+  document.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(() => {
+        cursor.style.left = `${mouseX}px`;
+        cursor.style.top = `${mouseY}px`;
+        ticking = false;
+      });
+    }
+  }, { passive: true });
 
-  document.addEventListener(
-    "mousemove",
-    (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(() => {
-          updateCursor();
-          ticking = false;
-        });
-      }
-    },
-    { passive: true }
-  );
-
+  // Smooth follower with RAF — stops when tab hidden to save CPU
+  let followerRaf;
   const animateFollower = () => {
     followerX += (mouseX - followerX) * 0.1;
     followerY += (mouseY - followerY) * 0.1;
     follower.style.left = `${followerX}px`;
     follower.style.top = `${followerY}px`;
-    requestAnimationFrame(animateFollower);
+    followerRaf = requestAnimationFrame(animateFollower);
   };
-  animateFollower();
+  followerRaf = requestAnimationFrame(animateFollower);
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) cancelAnimationFrame(followerRaf);
+    else followerRaf = requestAnimationFrame(animateFollower);
+  });
 
   document.querySelectorAll("a, button").forEach((el) => {
     el.addEventListener("mouseenter", () => {
@@ -105,52 +93,42 @@ if (cursor && follower) {
       cursor.style.transform = "translate(-50%, -50%) scale(2)";
       follower.style.transform = "translate(-50%, -50%) scale(0.5)";
       applyCursorPalette();
-    });
-
+    }, { passive: true });
     el.addEventListener("mouseleave", () => {
       overInteractive = false;
       cursor.style.transform = "translate(-50%, -50%) scale(1)";
       follower.style.transform = "translate(-50%, -50%) scale(1)";
       applyCursorPalette();
-    });
+    }, { passive: true });
   });
 
-  const darkPanels = document.querySelectorAll(".panel-dark, .panel-hype");
-  const colorObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          darkSectionsInView.add(entry.target);
-        } else {
-          darkSectionsInView.delete(entry.target);
-        }
-      });
-      applyCursorPalette();
-    },
-    { threshold: 0.35 }
-  );
+  const colorObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) darkSectionsInView.add(entry.target);
+      else darkSectionsInView.delete(entry.target);
+    });
+    applyCursorPalette();
+  }, { threshold: 0.35 });
 
-  darkPanels.forEach((panel) => colorObserver.observe(panel));
+  document.querySelectorAll(".panel-dark").forEach((p) => colorObserver.observe(p));
   applyCursorPalette();
 }
 
-const revealEls = document.querySelectorAll(".reveal-up");
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.1, rootMargin: "0px 0px -60px 0px" }
-);
+// ============ SCROLL REVEAL ============
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: "0px 0px -60px 0px" });
 
-revealEls.forEach((el) => {
+document.querySelectorAll(".reveal-up").forEach((el) => {
   if (!el.closest("#hero")) revealObserver.observe(el);
 });
 
+// ============ SMOOTH SCROLL ANCHORS ============
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", (e) => {
     e.preventDefault();
@@ -159,56 +137,47 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   });
 });
 
-const projectBlocks = document.querySelectorAll(".project-block");
-const projObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add("visible"), 80);
-        projObserver.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.1 }
-);
-projectBlocks.forEach((block) => projObserver.observe(block));
-
+// ============ SKETCH GUY FLOAT ============
 const sketchGuy = document.querySelector(".sketch-guy");
 if (sketchGuy) {
   let t = 0;
-  setInterval(() => {
+  let sketchRaf;
+  const floatSketch = () => {
     t += 0.05;
     sketchGuy.style.transform = `translateY(${4 * Math.sin(t)}px)`;
-  }, 30);
+    sketchRaf = requestAnimationFrame(floatSketch);
+  };
+  sketchRaf = requestAnimationFrame(floatSketch);
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) cancelAnimationFrame(sketchRaf);
+    else sketchRaf = requestAnimationFrame(floatSketch);
+  });
 }
 
+// ============ CHAT POPUP ============
 (() => {
-  const trigger = document.getElementById("kmChatTrigger");
+  const triggers = document.querySelectorAll(".km-chat-trigger");
   const overlay = document.getElementById("kmChatOverlay");
-  const popup = document.getElementById("kmChatPopup");
   const closeBtn = document.getElementById("kmChatClose");
-  if (!trigger || !overlay || !popup || !closeBtn) return;
+  if (!triggers.length || !overlay || !closeBtn) return;
 
   const openChat = () => {
     document.body.classList.add("km-chat-open");
     overlay.setAttribute("aria-hidden", "false");
-    trigger.setAttribute("aria-expanded", "true");
+    triggers.forEach((t) => t.setAttribute("aria-expanded", "true"));
   };
 
   const closeChat = () => {
     document.body.classList.remove("km-chat-open");
     overlay.setAttribute("aria-hidden", "true");
-    trigger.setAttribute("aria-expanded", "false");
+    triggers.forEach((t) => t.setAttribute("aria-expanded", "false"));
   };
 
-  trigger.addEventListener("click", openChat);
+  triggers.forEach((trigger) => trigger.addEventListener("click", openChat));
   closeBtn.addEventListener("click", closeChat);
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) closeChat();
-  });
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) closeChat(); });
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && document.body.classList.contains("km-chat-open")) {
-      closeChat();
-    }
+    if (e.key === "Escape" && document.body.classList.contains("km-chat-open")) closeChat();
   });
 })();

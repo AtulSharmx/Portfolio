@@ -1,79 +1,51 @@
 /**
  * Chat Routes
- * Handles POST /chat endpoint for AI responses
+ * POST /api/chat — accepts user message, returns AI response
  */
 
 const express = require('express');
 const router = express.Router();
 const { sendMessage } = require('../services/geminiService');
 
-/**
- * POST /chat
- * Accepts user message and returns AI response
- */
 router.post('/', async (req, res) => {
+  const isDev = process.env.NODE_ENV !== 'production';
+
   try {
     const { message } = req.body;
 
-    // Validate request
-    if (!message) {
-      return res.status(400).json({
-        success: false,
-        error: 'Message is required',
-      });
+    if (!message || typeof message !== 'string' || !message.trim()) {
+      return res.status(400).json({ success: false, error: 'Message must be a non-empty string' });
     }
 
-    if (typeof message !== 'string' || message.trim().length === 0) {
-      return res.status(400).json({
-        success: false,
-        error: 'Message must be a non-empty string',
-      });
-    }
-
-    // Limit message length to prevent abuse
     if (message.length > 1000) {
-      return res.status(400).json({
-        success: false,
-        error: 'Message is too long (max 1000 characters)',
-      });
+      return res.status(400).json({ success: false, error: 'Message too long (max 1000 chars)' });
     }
 
-    // Get AI response
     const aiResponse = await sendMessage(message.trim());
+    res.json({ success: true, message: aiResponse });
 
-    // Return success response
-    res.json({
-      success: true,
-      message: aiResponse,
-      timestamp: new Date().toISOString(),
-    });
   } catch (error) {
-    console.error('Chat route error:', error);
+    console.error('[chat]', error.message);
 
-    // Determine error type and respond accordingly
-    if (error.message.includes('API key')) {
-      return res.status(500).json({
+    if (error.message.includes('API key') || error.message.includes('not initialized')) {
+      return res.status(503).json({
         success: false,
-        error: 'API configuration error',
-        message: 'Server is not properly configured',
-        details: error.message,
+        message: 'AI service temporarily unavailable.',
+        ...(isDev && { details: error.message }),
       });
     }
 
-    if (error.message.includes('quota')) {
+    if (error.message.includes('quota') || error.message.includes('429')) {
       return res.status(429).json({
         success: false,
-        error: 'Rate limited',
         message: 'Too many requests. Please try again later.',
-        details: error.message,
       });
     }
 
     res.status(500).json({
       success: false,
-      error: 'Failed to process message',
-      message: 'Please try again in a moment',
-      details: error.message,
+      message: 'Please try again in a moment.',
+      ...(isDev && { details: error.message }),
     });
   }
 });
