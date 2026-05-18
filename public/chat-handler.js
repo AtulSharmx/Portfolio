@@ -91,18 +91,20 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text }),
-        signal: AbortSignal.timeout(20000), // 20 s timeout
+        signal: AbortSignal.timeout(25000), // 25 s timeout
       });
 
       removeLoading();
 
       if (!res.ok) {
-        let errMsg = `Error ${res.status}`;
+        let errorTitle = `API Server Error (Status ${res.status})`;
+        let errorDetail = '';
         try {
           const data = await res.json();
-          errMsg = data.message || data.error || errMsg;
+          errorTitle = data.message || data.error || errorTitle;
+          if (data.details) errorDetail = `\nDetails: ${data.details}`;
         } catch (_) { /* ignore parse errors */ }
-        throw new Error(errMsg);
+        throw new Error(`${errorTitle}${errorDetail}`);
       }
 
       const data = await res.json();
@@ -110,18 +112,21 @@
       if (data.success && data.message) {
         addMessage(data.message, false);
         messageHistory.push({ user: text, ai: data.message });
-        // Prevent unbounded memory growth
         if (messageHistory.length > MAX_HISTORY) messageHistory.shift();
       } else {
-        addMessage("Sorry, I couldn't generate a response. Try again?", false);
+        addMessage("⚠️ Sorry, I received an empty or invalid response from the server. Please try again.", false);
       }
     } catch (err) {
       removeLoading();
 
-      let msg = 'Something went wrong. Please try again.';
-      if (err.name === 'TimeoutError') msg = 'Response timed out. Please try again.';
-      else if (err.message.includes('Failed to fetch')) msg = 'Cannot reach the server. Check your connection.';
-      else if (err.message) msg = err.message;
+      let msg = '❌ Something went wrong. Please try again.';
+      if (err.name === 'TimeoutError') {
+        msg = '⏳ Response timed out. The server is taking too long to answer. Please try again.';
+      } else if (err.message.includes('Failed to fetch')) {
+        msg = '⚠️ API is not responding. The backend server might be sleeping (Render free tier goes to sleep after inactivity and can take up to 50 seconds to boot up). Please try again in a few seconds!';
+      } else if (err.message) {
+        msg = `❌ ${err.message}`;
+      }
 
       addMessage(msg, false);
     } finally {
