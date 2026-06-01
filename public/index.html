@@ -100,17 +100,23 @@
         <circle cx="175" cy="140" r="3" stroke="#1a1a1a" stroke-width="1.5" fill="none" class="float-dot"/>
       </svg>
     </div>
-    <div class="scroll-cue reveal-up delay-4">scroll ↓</div>
+    <div class="scroll-cue reveal-up delay-4" style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+      <svg width="16" height="36" viewBox="0 0 16 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+        <path d="M8 2 Q10 16 7 26 Q6 31 8 34" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <path d="M2 26 Q5 31 8 34 Q10 30 13 25" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      scroll
+    </div>
   </section>
 
   <!-- ======= SECTION 2: ABOUT ======= -->
   <section class="panel panel-cream" id="about">
     <div class="section-inner">
-      <div class="section-label reveal-up">02 / about</div>
+
       <div class="about-layout">
         <div class="about-left">
           <h2 class="section-big reveal-up">Who<br/><em>am I?</em></h2>
-          <p class="about-para reveal-up delay-1">I'm Atul — a BCA Data Science student at SGT University, currently in my 2nd year. I spend way too much time on tech, building small projects, and figuring out how things work. Always learning something new.</p>
+          <p class="about-para reveal-up delay-1">I'm Atul — a BCA Data Science student at SGT University, currently in my 2nd year. I'm into building real things, solving problems with code, and exploring AI. Always working on something new.</p>
           <div class="about-tags reveal-up delay-2">
             <span class="atag">🤝 Open to Intern & Collab</span>
           </div>
@@ -126,10 +132,9 @@
  to intern & collab</span></div>
           </div>
           <div class="learning-box reveal-up delay-3">
-            <p class="lb-label">Things I Enjoy</p>
+            <p class="lb-label">Things i am also Learning</p>
             <div class="lb-items">
               <span>🎨 Graphic Design</span>
-              <span>⚙ Git & GitHub</span>
               <span>🧊 3D Designing</span>
             </div>
           </div>
@@ -141,7 +146,7 @@
   <!-- ======= SECTION 3: SKILLS ======= -->
   <section class="panel panel-dark" id="skills">
     <div class="section-inner">
-      <div class="section-label reveal-up" style="color:#e8ff47">03 / skills</div>
+
       <h2 class="section-big reveal-up" style="color:#fff">What I<br/><em style="color:#e8ff47">work with.</em></h2>
       <div class="skills-layout">
         <div class="skill-col reveal-up delay-1">
@@ -169,7 +174,7 @@
   <!-- ======= SECTION 4: PROJECTS ======= -->
   <section class="panel panel-cream" id="projects">
     <div class="section-inner">
-      <div class="section-label reveal-up">04 / projects</div>
+
       <h2 class="section-big reveal-up">Things I<br/><em>built.</em></h2>
 
       <!-- Project 1 -->
@@ -191,7 +196,7 @@
             <path d="M10 22 L90 22" stroke="#1a1a1a" stroke-width="1.5"/>
             <circle cx="18" cy="16" r="3" stroke="#1a1a1a" stroke-width="1.5" fill="none"/>
             <circle cx="28" cy="16" r="3" stroke="#1a1a1a" stroke-width="1.5" fill="none"/>
-            <text x="50" y="50" text-anchor="middle" font-size="16" fill="#1a1a1a" font-family="serif">ðŸŽ‚</text>
+            <text x="50" y="50" text-anchor="middle" font-size="16" fill="#1a1a1a" font-family="serif">🎂</text>
           </svg>
         </div>
       </div>
@@ -287,26 +292,33 @@
   <!-- ======= CERTIFICATIONS ======= -->
   <section class="panel panel-cream" id="certifications">
     <div class="section-inner">
-      <div class="section-label reveal-up">05 / certifications</div>
-      <h2 class="section-big reveal-up">Certified<span class="dot">.</span></h2>
+
+      <h2 class="section-big reveal-up">Certifications<br/><em>& Achievements</em><span class="dot">.</span></h2>
       <div class="cert-scroll">
         <div class="cert-card reveal-up delay-1">
           <div class="cert-num">01</div>
+          <div class="cert-body">
+            <p class="cert-name">Ideathon 8.0 — NextGen Solutions</p>
+            <p class="cert-org">2nd Place · Internet of Things (IoT)</p>
+            <p class="cert-date">ACIC SGTU Community Innovation Centre · NITI Aayog · Atal Innovation Mission · SGT University · 2025</p>
+          </div>
+        </div>
+        <div class="cert-card reveal-up delay-2">
+          <div class="cert-num">02</div>
           <div class="cert-body">
             <p class="cert-name">Programming for Everybody — Getting Started with Python</p>
             <p class="cert-org">University of Michigan · Coursera</p>
             <p class="cert-date">Dec 2025</p>
           </div>
-          <div class="cert-badge">✓</div>
+          <a href="https://coursera.org/share/27f376d39014a26b7d9f86366c2d4542" target="_blank" rel="noopener noreferrer" class="cert-badge" style="text-decoration: none; color: inherit; cursor: pointer;">✓</a>
         </div>
-        <div class="cert-card reveal-up delay-2">
-          <div class="cert-num">02</div>
+        <div class="cert-card reveal-up delay-3">
+          <div class="cert-num">03</div>
           <div class="cert-body">
             <p class="cert-name">Generative AI Mastery Workshop</p>
-            <p class="cert-org">OpenAI Academy × NxtWave — India's Biggest GenAI Buildathon</p>
+            <p class="cert-org">NxtWave x OpenAI Academy</p>
             <p class="cert-date">Sept 2025</p>
           </div>
-          <div class="cert-badge">✓</div>
         </div>
       </div>
     </div>
@@ -315,10 +327,11 @@
   <!-- ======= ACHIEVEMENTS ======= -->
   <section class="panel panel-dark" id="achievements">
     <div class="section-inner">
-      <div class="section-label reveal-up" style="color:#e8ff47">06 / wins & events</div>
+
       <h2 class="section-big reveal-up" style="color:#fff">Wins<br/><em style="color:#e8ff47">& Events.</em></h2>
       <div class="ach-grid">
-        <div class="ach-card ach-highlight reveal-up delay-1">
+        <div class="ach-card ach-highlight reveal-up delay-1" style="border: 2px solid #e8ff47; position: relative;">
+          <div style="position: absolute; top: 12px; right: 12px; background: #e8ff47; color: #1a1a1a; padding: 2px 8px; font-size: 0.8rem; font-weight: bold; border-radius: 4px;">2nd Place</div>
           <div class="ach-icon">🥈</div>
           <h3 class="ach-title">Ideathon 8.0</h3>
           <p class="ach-sub">2nd Place · IoT Theme · NITI Aayog · SGT University · 2025</p>
@@ -328,19 +341,7 @@
           <div class="ach-icon">🌍</div>
           <h3 class="ach-title">Elite Hack 1.0</h3>
           <p class="ach-sub">Global Hackathon · Team Codewarrior · 7,500+ participants · 2025</p>
-          <p class="ach-desc">Jumped into a global online hackathon with 7,500+ participants just to see what it’s like. Learned more from watching others build than anything else.</p>
-        </div>
-        <div class="ach-card reveal-up delay-3">
-          <div class="ach-icon">🎯</div>
-          <h3 class="ach-title">Techfest Pradarshan 5.0</h3>
-          <p class="ach-sub">Treasure Hunt · SGT University · April 2026</p>
-          <p class="ach-desc">Participated in the annual college techfest — ran around campus solving clues in a technical treasure hunt. Good times. 🎯</p>
-        </div>
-        <div class="ach-card reveal-up delay-4">
-          <div class="ach-icon">🔬</div>
-          <h3 class="ach-title">Synergy 2025</h3>
-          <p class="ach-sub">Inter-College Science & Tech Fest · SGT University · 2025</p>
-          <p class="ach-desc">Showed up to the inter-college science & tech fest. Explored, connected, and soaked it all in.</p>
+          <p class="ach-desc">Participated in a global online hackathon with 7,500+ participants.</p>
         </div>
       </div>
     </div>
@@ -349,13 +350,13 @@
   <!-- ======= CONTACT ======= -->
   <section class="panel panel-contact" id="contact">
     <div class="contact-inner">
-      <div class="section-label reveal-up">07 / let's connect</div>
+
       <h2 class="contact-title reveal-up delay-1">Say<br/><em>Hello.</em></h2>
       <p class="contact-sub reveal-up delay-2">Drop a hello — I don’t bite.</p>
       <div class="contact-links reveal-up delay-3" style="align-items:flex-start;">
-        <a href="mailto:atulsharm0744@gmail.com" class="clink">
+        <a href="mailto:atulsharm0744@gmail.com" class="clink" id="emailCopyBtn">
           <span class="cl-icon">✉</span>
-          <span>Email</span>
+          <span id="emailCopyText">Email</span>
         </a>
         <div style="display:flex;flex-direction:column;gap:10px;align-items:stretch;">
           <a href="https://www.linkedin.com/in/atul-sharma-869715392/" target="_blank" class="clink">

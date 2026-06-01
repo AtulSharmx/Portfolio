@@ -181,3 +181,43 @@ if (sketchGuy) {
     if (e.key === "Escape" && document.body.classList.contains("km-chat-open")) closeChat();
   });
 })();
+
+// ============ ADDED ANIMATIONS ============
+
+
+// Animation 4: Section fade-in on scroll
+const sectionFadeObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("section-visible");
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+// Apply to all main sections (excluding hero to preserve your existing initial loader behavior)
+document.querySelectorAll("section.panel:not(#hero)").forEach(section => {
+  section.classList.add("section-fade");
+  sectionFadeObserver.observe(section);
+});
+
+// ============ COPY EMAIL TO CLIPBOARD ============
+const emailCopyBtn = document.getElementById('emailCopyBtn');
+const emailCopyText = document.getElementById('emailCopyText');
+
+if (emailCopyBtn && emailCopyText) {
+  emailCopyBtn.addEventListener('click', (e) => {
+    e.preventDefault(); // Prevent opening the mail app
+    const email = "atulsharm0744@gmail.com";
+    navigator.clipboard.writeText(email).then(() => {
+      const originalText = emailCopyText.innerText;
+      emailCopyText.innerText = 'Copied!';
+      setTimeout(() => {
+        emailCopyText.innerText = originalText;
+      }, 2000);
+    }).catch(err => {
+      console.error('Failed to copy text: ', err);
+    });
+  });
+}
+

@@ -15,7 +15,7 @@ This installs Express, Gemini API client, CORS, dotenv, and nodemon.
 
 Your API key is already in `.env`:
 ```
-GEMINI_API_KEY=AIzaSyBqSviykiQ2_JwzNJYRvzYeCB5zcy3Su2c
+GEMINI_API_KEY=your_api_key_here
 ```
 
 ✅ This is already configured and ready to use!
