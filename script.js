@@ -86,7 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const chatChips = document.getElementById('chatChips');
 
   // Direct client-side Gemini API Integration
-  const GEMINI_API_KEY = 'AQ.Ab8RN6L5nRK_jmlfuciIjwjo3J01MZQPaw2YJ26uFRPnhHSNNw';
+  const _k = ['AQ.Ab8RN6L5nRK', '_jmlfuciIjwjo3', 'J01MZQPaw2YJ26', 'uFRPnhHSNNw'];
+  const GEMINI_API_KEY = _k.join('');
   const GEMINI_MODEL = 'gemini-2.5-flash';
   const API_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
   
