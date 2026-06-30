@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atul Sharma | Frontend Developer Intern Portfolio</title>
+  <meta name="description"
+    content="Personal portfolio of Atul Sharma, a Frontend Developer Intern specializing in BCA Data Science with a premium neo-brutalist website design.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+  <!-- Header / Navigation -->
+  <header class="header">
+    <div class="nav-container">
+      <a href="#" class="logo-text">ATUL SHARMA</a>
+      <nav class="nav-links">
+        <a href="#about" class="nav-link">ABOUT</a>
+        <a href="#tech" class="nav-link">TECH STACK</a>
+        <a href="#projects" class="nav-link">PROJECTS</a>
+        <a href="#achievements" class="nav-link">WINS</a>
+        <a href="#contact" class="nav-link">CONTACT</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle Menu">
+        <i data-lucide="menu"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <span class="logo-text">ATUL SHARMA</span>
+      <button class="menu-close" aria-label="Close Menu">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+    <nav class="mobile-nav-links">
+      <a href="#about" class="mobile-nav-link">ABOUT</a>
+      <a href="#tech" class="mobile-nav-link">TECH STACK</a>
+      <a href="#projects" class="mobile-nav-link">PROJECTS</a>
+      <a href="#achievements" class="mobile-nav-link">WINS</a>
+      <a href="#contact" class="mobile-nav-link">CONTACT</a>
+    </nav>
+  </div>
+
+  <main class="main-content">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <div class="hero-badge">OPEN FOR INTERNSHIPS</div>
+        <h1 class="hero-title">ATUL SHARMA</h1>
+        <p class="hero-subtitle">Frontend Developer Intern</p>
+        <p class="hero-description">
+          Building high-performance, responsive web interfaces with clean architecture and modern user experiences.
+        </p>
+        <div class="hero-cta-group">
+          <a href="#projects" class="btn btn-primary">
+            <span>SEE MY WORK</span>
+            <i data-lucide="arrow-right"></i>
+          </a>
+          <a href="Atul_Sharma_Resume.pdf" class="btn btn-secondary" download="Atul_Sharma_Resume.pdf">
+            <span>DOWNLOAD RESUME</span>
+            <i data-lucide="download"></i>
+          </a>
+          <button class="btn btn-accent chat-trigger-btn">
+            <span>CHAT WITH ME</span>
+            <i data-lucide="message-square"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- About Section -->
+    <section id="about" class="section about-section">
+      <div class="section-container">
+        <div class="section-header-block">
+          <h2 class="section-title">WHO AM I?</h2>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-info-card">
+            <p class="about-text">
+              I am a passionate developer currently pursuing my <strong>BCA in Data Science</strong> at <strong>SGT University</strong>. My
+              educational foundation blends data-driven analytical thinking with modern frontend development practices.
+            </p>
+            <p class="about-text">
+              I love turning complex wireframes into interactive, accessible, and fast web experiences. I focus on
+              pixel-perfect implementations, clean state management, and highly polished visual aesthetics.
+            </p>
+          </div>
+
+          <div class="stats-card">
+            <h3 class="stats-title">QUICK STATS</h3>
+            <div class="stats-grid">
+              <div class="stat-item">
+                <span class="stat-label">NAME</span>
+                <span class="stat-value">Atul Sharma</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">DEGREE</span>
+                <span class="stat-value">Bachelor of Computer Applications (Data Science)</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">UNIVERSITY</span>
+                <span class="stat-value">SGT University</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">LOCATION</span>
+                <span class="stat-value">Gurugram, Haryana</span>
+              </div>
+              <div class="stat-item span-2">
+                <span class="stat-label">STATUS</span>
+                <span class="stat-value highlight-status">Open to Intern & Collab</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section id="tech" class="section tech-section">
+      <div class="section-container">
+        <div class="section-header-block">
+          <h2 class="section-title">TECH STACK</h2>
+        </div>
+
+        <div class="tech-grid">
+          <!-- Category: Languages -->
+          <div class="tech-category-card">
+            <div class="category-header">
+              <i data-lucide="code-2" class="category-icon icon-purple"></i>
+              <h3 class="category-title">LANGUAGES</h3>
+            </div>
+            <div class="tech-tags">
+              <span class="tech-tag">HTML5</span>
+              <span class="tech-tag">CSS3</span>
+              <span class="tech-tag">JavaScript (ES6+)</span>
+              <span class="tech-tag">Python</span>
+            </div>
+          </div>
+
+          <!-- Category: Tools -->
+          <div class="tech-category-card">
+            <div class="category-header">
+              <i data-lucide="wrench" class="category-icon icon-yellow"></i>
+              <h3 class="category-title">TOOLS</h3>
+            </div>
+            <div class="tech-tags">
+              <span class="tech-tag">VS Code</span>
+              <span class="tech-tag">Git</span>
+              <span class="tech-tag">GitHub</span>
+              <span class="tech-tag">Vercel</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section projects-section">
+      <div class="section-container">
+        <div class="section-header-block">
+          <h2 class="section-title">SELECTED WORK</h2>
+        </div>
+
+        <div class="projects-grid">
+          <!-- Project 1 -->
+          <article class="project-card">
+            <div class="project-number">01</div>
+            <div class="project-content">
+              <h3 class="project-title">The Full Stack Safety Net (Task Manager)</h3>
+              <p class="project-desc">
+                Full-stack task management web app with secure user accounts and persistent task storage.
+              </p>
+              <div class="project-tags">
+                <span class="proj-tag tag-pink">HTML</span>
+                <span class="proj-tag tag-pink">CSS</span>
+                <span class="proj-tag tag-lime">JavaScript</span>
+                <span class="proj-tag tag-blue">Supabase</span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/AtulSharmx/The-Full-Stack-Safety-Net" target="_blank" rel="noopener noreferrer"
+                  class="proj-link">
+                  <span>Source Code</span>
+                  <i data-lucide="github"></i>
+                </a>
+                <a href="https://the-full-stack-safety-net-r69r.vercel.app/" target="_blank" rel="noopener noreferrer"
+                  class="proj-link demo">
+                  <span>Live Demo</span>
+                  <i data-lucide="external-link"></i>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="project-card">
+            <div class="project-number">02</div>
+            <div class="project-content">
+              <h3 class="project-title">E-Commerce Storefront</h3>
+              <p class="project-desc">
+                Interactive online store featuring dynamic product category filtering and state-managed shopping cart.
+              </p>
+              <div class="project-tags">
+                <span class="proj-tag tag-pink">HTML</span>
+                <span class="proj-tag tag-pink">CSS</span>
+                <span class="proj-tag tag-lime">JavaScript</span>
+                <span class="proj-tag tag-blue">Local Storage</span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/AtulSharmx/ecommerce-storefront" target="_blank" rel="noopener noreferrer"
+                  class="proj-link">
+                  <span>Source Code</span>
+                  <i data-lucide="github"></i>
+                </a>
+                <a href="https://ecommerce-store-liart-delta.vercel.app/" target="_blank" rel="noopener noreferrer"
+                  class="proj-link demo">
+                  <span>Live Demo</span>
+                  <i data-lucide="external-link"></i>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3 -->
+          <article class="project-card">
+            <div class="project-number">03</div>
+            <div class="project-content">
+              <h3 class="project-title">Analytics Admin Dashboard</h3>
+              <p class="project-desc">
+                Admin panel rendering interactive sales charts via Chart.js with a searchable user management table.
+              </p>
+              <div class="project-tags">
+                <span class="proj-tag tag-pink">HTML</span>
+                <span class="proj-tag tag-pink">CSS</span>
+                <span class="proj-tag tag-lime">JavaScript</span>
+                <span class="proj-tag tag-blue">Chart.js</span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/AtulSharmx/Analytics-Admin-Dashboard" target="_blank" rel="noopener noreferrer"
+                  class="proj-link">
+                  <span>Source Code</span>
+                  <i data-lucide="github"></i>
+                </a>
+                <a href="https://analytics-admin-dashboard-srpm.vercel.app/" target="_blank" rel="noopener noreferrer"
+                  class="proj-link demo">
+                  <span>Live Demo</span>
+                  <i data-lucide="external-link"></i>
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wins & Achievements Section -->
+    <section id="achievements" class="section achievements-section">
+      <div class="section-container">
+        <div class="section-header-block">
+          <h2 class="section-title">WINS & ACHIEVEMENTS</h2>
+        </div>
+
+        <div class="achievements-grid">
+          <!-- Hackathon 1 -->
+          <div class="achievement-card">
+            <div class="ach-badge">HACKATHON</div>
+            <h3 class="ach-title">Ideathon 8.0 — NextGen Solutions (2nd Place)</h3>
+            <p class="ach-subtitle">IoT Theme · ACIC SGTU & NITI Aayog · 2025</p>
+            <p class="ach-desc">
+              Pitched a Smart Attendance System using IoT & RFID to eliminate proxy attendance.
+            </p>
+          </div>
+
+          <!-- Hackathon 2 -->
+          <div class="achievement-card">
+            <div class="ach-badge">COMPETITION</div>
+            <h3 class="ach-title">USAII Global AI Hackathon</h3>
+            <p class="ach-subtitle">Active Competitor · June 2026</p>
+            <p class="ach-desc">
+              Currently participating in AI thinking qualifiers and building real-world AI project solutions.
+            </p>
+          </div>
+
+          <!-- Certificate 1 -->
+          <div class="achievement-card">
+            <div class="ach-badge">CERTIFICATE</div>
+            <h3 class="ach-title">Machine Learning Certification (NPTEL)</h3>
+            <p class="ach-subtitle">IIT-Backed Certification · Enrolled</p>
+            <p class="ach-desc">
+              Deepening knowledge in foundational Machine Learning algorithms and data science practices.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact / Say Hello Section -->
+    <section id="contact" class="section contact-section">
+      <div class="section-container">
+        <div class="section-header-block">
+          <h2 class="section-title">SAY HELLO</h2>
+        </div>
+
+        <div class="contact-card">
+          <p class="contact-invite">
+            Looking for a frontend intern or want to collaborate on a project? Feel free to reach out. I reply fast!
+          </p>
+
+          <div class="contact-links-grid">
+            <a href="mailto:atulsharmx0@gmail.com" class="contact-link-item">
+              <span class="icon-wrap"><i data-lucide="mail"></i></span>
+              <span class="link-label">EMAIL</span>
+              <span class="link-url">atulsharmx0@gmail.com</span>
+            </a>
+
+            <a href="https://www.linkedin.com/in/atulsharmx/" target="_blank" rel="noopener noreferrer"
+              class="contact-link-item">
+              <span class="icon-wrap"><i data-lucide="linkedin"></i></span>
+              <span class="link-label">LINKEDIN</span>
+              <span class="link-url">linkedin.com/in/atulsharmx</span>
+            </a>
+
+            <a href="https://www.instagram.com/atul_sharmx_/" target="_blank" rel="noopener noreferrer"
+              class="contact-link-item">
+              <span class="icon-wrap"><i data-lucide="instagram"></i></span>
+              <span class="link-label">INSTAGRAM</span>
+              <span class="link-url">@atul_sharmx_</span>
+            </a>
+
+            <a href="https://github.com/AtulSharmx" target="_blank" rel="noopener noreferrer" class="contact-link-item">
+              <span class="icon-wrap"><i data-lucide="github"></i></span>
+              <span class="link-label">GITHUB</span>
+              <span class="link-url">github.com/AtulSharmx</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer Info -->
+  <footer class="site-footer">
+    <p>&copy; 2026 Atul Sharma</p>
+  </footer>
+
+  <!-- Neo-Brutalist Chat Modal -->
+  <div class="chat-modal-overlay" id="chatOverlay">
+    <div class="chat-modal" id="chatModal" role="dialog" aria-labelledby="chatHeaderTitle">
+      <!-- Modal Header -->
+      <div class="chat-header">
+        <div class="chat-title-group">
+          <div class="chat-avatar-status"></div>
+          <h2 id="chatHeaderTitle" class="chat-header-title">ATUL SHARMA AI</h2>
+        </div>
+        <button class="chat-close-btn" id="chatCloseBtn" aria-label="Close Chat">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <!-- Chat Messages Panel -->
+      <div class="chat-body" id="chatBody">
+        <div class="chat-message ai-message">
+          <p>Hi! I'm Atul's AI Assistant. Ask me anything about his projects, coding skills, or education!</p>
+        </div>
+      </div>
+
+      <!-- Quick Option Chips -->
+      <div class="chat-chips-container" id="chatChips">
+        <button class="chat-chip" data-question="What projects have you built?">Projects 🚀</button>
+        <button class="chat-chip" data-question="What are your core skills?">Skills 💻</button>
+        <button class="chat-chip" data-question="Tell me about your studies.">Education 🎓</button>
+      </div>
+
+      <!-- Chat Input Form -->
+      <form class="chat-input-form" id="chatForm">
+        <input type="text" id="chatInput" placeholder="Ask a question..." autocomplete="off"
+          aria-label="Chat input message" maxlength="250">
+        <button type="submit" class="chat-send-btn" id="chatSendBtn" aria-label="Send Message">
+          <i data-lucide="send"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main JavaScript File -->
+  <script src="script.js"></script>
+</body>
+
+</html>
